@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Privacy Share{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="brand">
+            <i class="ri-shield-keyhole-line brand-icon"></i>
+            <h2>PrivacyShare</h2>
+        </div>
+        
+        <ul class="nav-links">
+            {% if session.get('user_id') %}
+                <li>
+                    <a href="{{ url_for('index') }}" class="active">
+                        <i class="ri-dashboard-line"></i> Dashboard
+                    </a>
+                </li>
+                
+                {% if session.get('user_role') == 'data_owner' %}
+                    <li class="nav-section">Espace Fournisseur</li>
+                    <li>
+                        <a href="{{ url_for('data_owner.upload_record') }}">
+                            <i class="ri-upload-cloud-2-line"></i> Déposer des données
+                        </a>
+                    </li>
+                {% endif %}
+                
+                {% if session.get('user_role') == 'analyst' %}
+                    <li class="nav-section">Espace Analyse</li>
+                    <li>
+                        <a href="{{ url_for('analyst.query_dashboard') }}">
+                            <i class="ri-search-eye-line"></i> Requêtes Privées
+                        </a>
+                    </li>
+                {% endif %}
+
+                <li>
+    <a href="{{ url_for('data_owner.view_rules') }}">
+        <i class="ri-settings-5-line"></i> Règles de sécurité
+    </a>
+</li>
+                
+                <li class="logout-link">
+                    <a href="{{ url_for('auth.logout') }}">
+                        <i class="ri-logout-box-r-line"></i> Déconnexion
+                    </a>
+                </li>
+            {% else %}
+                <li class="nav-section">Authentification</li>
+                <li>
+                    <a href="{{ url_for('auth.login') }}">
+                        <i class="ri-login-box-line"></i> Connexion
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ url_for('auth.register') }}">
+                        <i class="ri-user-add-line"></i> Créer un compte
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
+        
+        {% if session.get('user_id') %}
+            <div class="user-profile-status">
+                <i class="ri-user-3-line"></i>
+                <div>
+                    <strong>{{ session.get('user_name') }}</strong><br>
+                    <small class="role-badge">{{ 'Propriétaire' if session.get('user_role') == 'data_owner' else 'Analyste' }}</small>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="main-content">
+        <header class="main-header">
+            <div class="page-title">
+                <h1>{% block page_title %}Tableau de Bord{% endblock %}</h1>
+            </div>
+        </header>
+
+        <div class="flash-container">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            <i class="ri-information-line"></i> {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+        </div>
+
+        <main class="content-body">
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Requêtes Privées - PrivacyShare{% endblock %}
+{% block page_title %}Console d'Analyse Statistique{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: center; align-items: center; padding-top: 1rem;">
+    <div class="card" style="width: 100%; max-width: 650px; border-top: 5px solid var(--accent-color);">
+        <h3><i class="ri-search-eye-line" style="color: var(--accent-color);"></i> Formuler une Requête Globale</h3>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">
+            En vertu des politiques de protection, vous ne pouvez pas extraire de lignes individuelles. Le système renverra une moyenne globale protégée par l'algorithme de Confidentialité Différentielle.
+        </p>
+
+        <form action="{{ url_for('analyst.query_dashboard') }}" method="POST">
+            
+            <div class="form-group">
+                <label for="categorie">Secteur d'étude ciblé</label>
+                <select id="categorie" name="categorie" class="form-control" required>
+                    <option value="Sante">Santé (Analyse des tendances médicales)</option>
+                    <option value="Finance">Finance (Analyse des revenus globaux)</option>
+                    <option value="Education">Éducation (Indicateurs académiques)</option>
+                    <option value="Ressources Humaines">Ressources Humaines (Grilles salariales)</option>
+                </select>
+            </div>
+
+            <div class="form-group" style="background-color: var(--bg-color); padding: 1rem; border-radius: 6px; border: 1px solid var(--border-color);">
+                <label for="epsilon" style="display: flex; justify-content: space-between;">
+                    <span>Budget de Confidentialité ($\epsilon$)</span>
+                    <strong id="epsilon-val" style="color: var(--accent-color);">0.5</strong>
+                </label>
+                <input type="range" id="epsilon" name="epsilon" min="0.1" max="2.0" step="0.1" value="0.5" class="form-control" style="cursor: pointer; height: 6px;" oninput="document.getElementById('epsilon-val').innerText = this.value">
+                
+                <div style="display: flex; justify-content: space-between; margin-top: 8px; font-size: 0.75rem; color: var(--text-muted);">
+                    <span><i class="ri-shield-user-fill"></i> Protection Maximale (Bruit fort, Écart élevé)</span>
+                    <span>Précision Maximale (Bruit faible) <i class="ri-bar-chart-fill"></i></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="motif">Motif d'accès légitime (Raison de l'étude)</label>
+                <textarea id="motif" name="motif" class="form-control" rows="3" placeholder="Ex: Étude d'impact socio-économique pour l'ouverture d'un nouveau centre de soins..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; gap: 8px;">
+                <i class="ri-calculator-line"></i> Calculer la Statistique Anonyme
+            </button>
+        </form>
+    </div>
+</div>
+{% endblock %}

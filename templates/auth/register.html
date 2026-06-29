@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Inscription - PrivacyShare{% endblock %}
+{% block page_title %}Créer un Compte Sécurisé{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: center; align-items: center; padding-top: 2rem;">
+    <div class="card" style="width: 100%; max-width: 500px; border-top: 5px solid var(--accent-color);">
+        <h3><i class="ri-user-add-line"></i> Formulaire d'Enregistrement</h3>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">
+            Rejoignez le réseau d'échange de données cryptographiques en choisissant votre profil.
+        </p>
+
+        <form action="{{ url_for('auth.register') }}" method="POST">
+            <div class="form-group">
+                <label for="nom_complet">Nom Complet / Nom de l'Organisation</label>
+                <input type="text" id="nom_complet" name="nom_complet" class="form-control" placeholder="Ex: Hôpital Central de Yaoundé" required>
+            </div>
+
+            <div class="form-group">
+                <label for="email">Adresse Email Professionnelle</label>
+                <input type="email" id="email" name="email" class="form-control" placeholder="Ex: contact@organisation.cm" required>
+            </div>
+
+            <div class="form-group">
+                <label for="role">Rôle au sein du Système</label>
+                <select id="role" name="role" class="form-control" required style="cursor: pointer;">
+                    <option value="" disabled selected>-- Sélectionnez votre privilège --</option>
+                    <option value="data_owner">Fournisseur de Données (Masquage & Dépôt)</option>
+                    <option value="analyst">Analyste Chercheur (Requêtes Floutées & Statistiques)</option>
+                </select>
+                <small style="color: var(--text-muted); display: block; margin-top: 5px; font-size: 0.75rem;">
+                    * Le rôle détermine les outils cryptographiques mis à votre disposition.
+                </small>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Mot de passe robuste</label>
+                <input type="password" id="password" name="password" class="form-control" placeholder="••••••••" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem; gap: 8px;">
+                <i class="ri-shield-check-line"></i> Finaliser l'Inscription
+            </button>
+        </form>
+
+        <div style="margin-top: 1.5rem; text-align: center; font-size: 0.9rem;">
+            <span style="color: var(--text-muted);">Déjà inscrit ?</span> 
+            <a href="{{ url_for('auth.login') }}" style="color: var(--accent-color); font-weight: bold; text-decoration: none;">Connectez-vous ici</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

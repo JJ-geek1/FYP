@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block title %}Accueil - PrivacyShare{% endblock %}
+{% block page_title %}Système d'Échange Sécurisé de Données{% endblock %}
+
+{% block content %}
+<div style="max-width: 1000px; margin: 0 auto;">
+
+    <div class="card" style="background: linear-gradient(135deg, var(--primary-color) 0%, #334155 100%); color: white; padding: 2.5rem; border: none; margin-bottom: 2rem;">
+        {% if session.get('user_id') %}
+            <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem;">Ravi de vous revoir, {{ session.get('user_name') }} !</h2>
+            <p style="color: #cbd5e1; font-size: 0.95rem;">
+                Votre session est active avec les privilèges du rôle : 
+                <strong style="color: #38bdf8; text-transform: uppercase;">
+                    {{ 'Propriétaire de Données' if session.get('user_role') == 'data_owner' else 'Analyste Chercheur' }}
+                </strong>.
+            </p>
+        {% else %}
+            <h2 style="font-size: 1.8rem; margin-bottom: 0.5rem;">Bienvenue sur la plateforme PrivacyShare</h2>
+            <p style="color: #cbd5e1; font-size: 0.95rem; margin-bottom: 1.5rem;">
+                Une architecture décentralisée conçue pour partager et analyser des données sensibles tout en garantissant une protection absolue de la vie privée grâce à la Confidentialité Différentielle ($\epsilon$-DP).
+            </p>
+            <div style="display: flex; gap: 12px;">
+                <a href="{{ url_for('auth.login') }}" class="btn btn-primary" style="background-color: var(--accent-color); text-decoration: none;">
+                    <i class="ri-login-box-line" style="margin-right: 8px;"></i> Se connecter
+                </a>
+                <a href="{{ url_for('auth.register') }}" class="btn" style="background-color: rgba(255,255,255,0.1); color: white; border: 1px solid rgba(255,255,255,0.2); text-decoration: none;">
+                    Créer un compte
+                </a>
+            </div>
+        {% endif %}
+    </div>
+
+    {% if session.get('user_id') %}
+        <div class="grid-container" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+            
+            {% if session.get('user_role') == 'data_owner' %}
+                <div class="card" style="border-top: 4px solid var(--accent-color);">
+                    <h3 style="color: var(--accent-color);"><i class="ri-upload-cloud-2-line"></i> Dépôt Anonymisé</h3>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5; margin-bottom: 1.5rem;">
+                        Importez de nouveaux enregistrements. Le système se chargera d'appliquer instantanément les politiques de hachage HMAC-SHA256 sur les colonnes identifiables avant stockage.
+                    </p>
+                    <a href="{{ url_for('data_owner.upload_record') }}" class="btn btn-primary" style="width: 100%; text-decoration: none;">
+                        Ouvrir la console de dépôt
+                    </a>
+                </div>
+
+                <div class="card" style="border-top: 4px solid var(--warning-color);">
+                    <h3 style="color: var(--warning-color);"><i class="ri-settings-5-line"></i> Règles Cryptographiques</h3>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5; margin-bottom: 1.5rem;">
+                        Consultez la cartographie des protections actives sur votre dataset. Vérifiez quelles colonnes subissent un masquage lourd ou une injection de bruit mathématique.
+                    </p>
+                    <a href="{{ url_for('data_owner.view_rules') }}" class="btn" style="background-color: #fffbeb; color: var(--warning-color); border: 1px solid #fef3c7; width: 100%; text-decoration: none;">
+                        Voir les règles actives
+                    </a>
+                </div>
+            {% endif %}
+
+            {% if session.get('user_role') == 'analyst' %}
+                <div class="card" style="border-top: 4px solid var(--success-color);">
+                    <h3 style="color: var(--success-color);"><i class="ri-search-eye-line"></i> Requêtes Statistiques</h3>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5; margin-bottom: 1.5rem;">
+                        Formulez des requêtes d'analyse globale sur les revenus ou les âges. Ajustez le paramètre Epsilon ($\epsilon$) pour contrôler la précision et le floutage du résultat.
+                    </p>
+                    <a href="{{ url_for('analyst.query_dashboard') }}" class="btn btn-primary" style="background-color: var(--success-color); width: 100%; text-decoration: none;">
+                        Lancer une analyse
+                    </a>
+                </div>
+
+                <div class="card" style="border-top: 4px solid var(--accent-color);">
+                    <h3><i class="ri-file-shield-2-line"></i> Transparence & Audit</h3>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.5; margin-bottom: 1.5rem;">
+                        Chaque calcul ou tentative d'accès aux données est tracé de manière immuable en base de données. L'historique enregistre votre identité, l'heure et le motif légitime de l'étude.
+                    </p>
+                    <button class="btn" style="width: 100%; background-color: var(--bg-color); color: var(--text-muted); border: 1px solid var(--border-color); cursor: not-allowed;" disabled>
+                        Registre d'audit actif <i class="ri-checkbox-circle-fill" style="color: var(--success-color); margin-left: 5px;"></i>
+                    </button>
+                </div>
+            {% endif %}
+
+        </div>
+    {% else %}
+        <div class="grid-container" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); margin-top: 1rem;">
+            <div class="card">
+                <h4 style="margin-bottom: 8px;"><i class="ri-shield-check-line" style="color: var(--accent-color); margin-right: 5px;"></i> Privacy by Design</h4>
+                <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.4;">Les données nominatives comme le nom ou la CNI sont détruites et remplacées par des codes mathématiques dès leur soumission.</p>
+            </div>
+            <div class="card">
+                <h4 style="margin-bottom: 8px;"><i class="ri-bubble-chart-line" style="color: var(--success-color); margin-right: 5px;"></i> Bruit de Laplace</h4>
+                <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.4;">L'injection d'un flou mathématique empêche toute tentative de deviner les données réelles d'une personne précise à partir des graphiques.</p>
+            </div>
+            <div class="card">
+                <h4 style="margin-bottom: 8px;"><i class="ri-history-line" style="color: var(--warning-color); margin-right: 5px;"></i> Registre d'Audit</h4>
+                <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.4;">Un journal de conformité non modifiable enregistre l'auteur, l'heure et la justification réglementaire de chaque calcul.</p>
+            </div>
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+
+{% block title %}Règles de Confidentialité - PrivacyShare{% endblock %}
+{% block page_title %}Politique de Protection du Dataset{% endblock %}
+
+{% block content %}
+<div style="max-width: 900px; margin: 0 auto;">
+    
+    <div class="card" style="border-top: 5px solid var(--accent-color); margin-bottom: 2rem;">
+        <h3><i class="ri-settings-5-line" style="color: var(--accent-color);"></i> Cartographie de Protection des Données</h3>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0;">
+            Ce panneau récapitule les mécanismes cryptographiques appliqués à chaque attribut avant son stockage ou son traitement par les analystes tiers.
+        </p>
+    </div>
+
+    <div class="grid-container" style="grid-template-columns: 1fr;">
+        
+        <div class="card" style="display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 1.5rem;">
+            <div>
+                <h4 style="font-size: 1.05rem; margin-bottom: 4px;">Numéro de CNI / Passeport (`cni`)</h4>
+                <span style="font-size: 0.8rem; color: var(--text-muted);">Type de donnée : Identifiant Direct (PII)</span>
+            </div>
+            <div style="text-align: right;">
+                <span style="background-color: #fef2f2; color: var(--danger-color); padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; display: inline-flex; align-items: center; gap: 5px;">
+                    <i class="ri-lock-password-fill"></i> Pseudonymisation Irréversible
+                </span>
+                <small style="display: block; margin-top: 5px; color: var(--text-muted); font-size: 0.75rem;">Mécanisme : HMAC-SHA256 + Sel</small>
+            </div>
+        </div>
+
+        <div class="card" style="display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 1.5rem;">
+            <div>
+                <h4 style="font-size: 1.05rem; margin-bottom: 4px;">Nom Complet du Citoyen (`nom_patient`)</h4>
+                <span style="font-size: 0.8rem; color: var(--text-muted);">Type de donnée : Identifiant Direct (PII)</span>
+            </div>
+            <div style="text-align: right;">
+                <span style="background-color: #fef2f2; color: var(--danger-color); padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; display: inline-flex; align-items: center; gap: 5px;">
+                    <i class="ri-lock-password-fill"></i> Pseudonymisation Irréversible
+                </span>
+                <small style="display: block; margin-top: 5px; color: var(--text-muted); font-size: 0.75rem;">Mécanisme : HMAC-SHA256 + Sel</small>
+            </div>
+        </div>
+
+        <div class="card" style="display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 1.5rem;">
+            <div>
+                <h4 style="font-size: 1.05rem; margin-bottom: 4px;">Revenu Annuel (`revenu`)</h4>
+                <span style="font-size: 0.8rem; color: var(--text-muted);">Type de donnée : Attribut Numérique Sensible</span>
+            </div>
+            <div style="text-align: right;">
+                <span style="background-color: #eff6ff; color: var(--accent-color); padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; display: inline-flex; align-items: center; gap: 5px;">
+                    <i class="ri-bubble-chart-fill"></i> Confidentialité Différentielle
+                </span>
+                <small style="display: block; margin-top: 5px; color: var(--text-muted); font-size: 0.75rem;">Mécanisme : Bruit de Laplace ($\Delta S = 50,000$)</small>
+            </div>
+        </div>
+
+        <div class="card" style="display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 1.5rem;">
+            <div>
+                <h4 style="font-size: 1.05rem; margin-bottom: 4px;">Âge (`age`)</h4>
+                <span style="font-size: 0.8rem; color: var(--text-muted);">Type de donnée : Attribut Numérique</span>
+            </div>
+            <div style="text-align: right;">
+                <span style="background-color: #eff6ff; color: var(--accent-color); padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; display: inline-flex; align-items: center; gap: 5px;">
+                    <i class="ri-bubble-chart-fill"></i> Confidentialité Différentielle
+                </span>
+                <small style="display: block; margin-top: 5px; color: var(--text-muted); font-size: 0.75rem;">Mécanisme : Bruit de Laplace ($\Delta S = 1$)</small>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="card" style="margin-top: 2rem; background-color: #f0f9ff; border: 1px solid #bae6fd;">
+        <h4 style="color: #0369a1; display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+            <i class="ri-shield-check-line"></i> Note pour l'audit de conformité
+        </h4>
+        <p style="font-size: 0.85rem; color: #0369a1; line-height: 1.5; margin: 0;">
+            Ce système applique nativement les principes du <strong>Privacy by Design</strong>. Les flux d'ingestion respectent la minimisation des données : aucun intermédiaire réseau ni administrateur de base de données ne peut intercepter les informations nominatives originales.
+        </p>
+    </div>
+
+</div>
+{% endblock %}

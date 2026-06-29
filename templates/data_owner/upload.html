@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block title %}Dépôt de Données - PrivacyShare{% endblock %}
+{% block page_title %}Sécurisation & Importation des Données{% endblock %}
+
+{% block content %}
+<div class="grid-container" style="grid-template-columns: 1fr 1.8fr;">
+    
+    <div class="card" style="border-top: 5px solid var(--accent-color); height: fit-content;">
+        <h3><i class="ri-shield-user-line" style="color: var(--accent-color);"></i> Nouvel Enregistrement</h3>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">
+            Les données d'identité saisies ici seront hachées de manière irréversible par le serveur avant d'atteindre la base de données.
+        </p>
+        
+        <form action="{{ url_for('data_owner.upload_record') }}" method="POST">
+            <div class="form-group">
+                <label for="nom_patient">Nom Complet du Citoyen / Patient</label>
+                <input type="text" id="nom_patient" name="nom_patient" class="form-control" placeholder="Ex: Samuel Eto'o" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="cni">Numéro d'Identité National (CNI / Passeport)</label>
+                <input type="text" id="cni" name="cni" class="form-control" placeholder="Ex: 100234567" required>
+            </div>
+            
+            <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <div>
+                    <label for="age">Âge Réel</label>
+                    <input type="number" id="age" name="age" class="form-control" min="0" max="120" placeholder="Ex: 34" required>
+                </div>
+                <div>
+                    <label for="revenu">Revenu Annuel (XAF)</label>
+                    <input type="number" id="revenu" name="revenu" class="form-control" min="0" placeholder="Ex: 5000000" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="categorie">Secteur / Catégorie d'Étude</label>
+                <select id="categorie" name="categorie" class="form-control" required>
+                    <option value="Sante">Santé (Dossiers Médicaux)</option>
+                    <option value="Finance">Finance (Inclusion Bancaire)</option>
+                    <option value="Education">Éducation (Statistiques Scolaires)</option>
+                    <option value="Ressources Humaines">Ressources Humaines (Salaires)</option>
+                </select>
+            </div>
+            
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem; gap: 8px;">
+                <i class="ri-lock-2-line"></i> Anonymiser & Envoyer
+            </button>
+        </form>
+    </div>
+
+    <div class="card" style="border-top: 5px solid var(--success-color);">
+        <h3><i class="ri-database-2-line" style="color: var(--success-color);"></i> Aperçu de la Base de Données (Vue Chiffrée)</h3>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">
+            Voici ce que voit un administrateur ou un pirate s'il accède aux tables. Les identifiants directs sont transformés en jetons de sécurité uniques.
+        </p>
+        
+        <div class="table-responsive">
+            <table class="table-custom">
+                <thead>
+                    <tr>
+                        <th>ID Alternatif (CNI Hachée)</th>
+                        <th style="text-align: center; width: 80px;">Âge</th>
+                        <th>Catégorie</th>
+                        <th style="text-align: right;">Statut</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for r in records %}
+                    <tr>
+                        <td>
+                            <code style="background-color: #f1f5f9; padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; color: #0f172a; display: block; max-width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="{{ r.identifiant_anonyme }}">
+                                {{ r.identifiant_anonyme }}
+                            </code>
+                        </td>
+                        <td style="text-align: center; font-weight: 600;">{{ r.age }} ans</td>
+                        <td>
+                            <span style="background-color: #eff6ff; color: #1e40af; padding: 4px 8px; border-radius: 4px; font-size: 0.8rem; font-weight: 500;">
+                                {{ r.categorie }}
+                            </span>
+                        </td>
+                        <td style="text-align: right; color: var(--success-color); font-weight: 500; font-size: 0.85rem;">
+                            <i class="ri-checkbox-circle-line"></i> Protégé
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% if not records %}
+                    <tr>
+                        <td colspan="4" style="text-align: center; color: var(--text-muted); padding: 2rem;">
+                            Aucune donnée partagée pour le moment. Utilisez le formulaire pour ajouter le premier enregistrement anonyme.
+                        </td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

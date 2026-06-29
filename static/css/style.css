@@ -1,0 +1,373 @@
+/* --- CONFIGURATION GLOBALE & VARIABLES --- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    /* Palette de couleurs raffinée (Thème Cybersécurité / Slate moderne) */
+    --bg-color: #f8fafc;
+    --card-bg: #ffffff;
+    --text-main: #0f172a;
+    --text-muted: #64748b;
+    --primary-color: #0f172a;   /* Slate 900 profond */
+    --primary-light: #1e293b;   /* Slate 800 */
+    --accent-color: #2563eb;    /* Bleu tech royal */
+    --accent-hover: #1d4ed8;
+    --accent-focus: rgba(37, 99, 235, 0.15);
+    
+    /* Indicateurs d'état feutrés (Moins saturés, plus pro) */
+    --success-color: #047857;
+    --success-bg: #f0fdf4;
+    --success-border: #bbf7d0;
+    
+    --danger-color: #b91c1c;
+    --danger-bg: #fef2f2;
+    --danger-border: #fecaca;
+    
+    --warning-color: #b45309;
+    --warning-bg: #fffbeb;
+    --warning-border: #fef3c7;
+    
+    --info-color: #0369a1;
+    --info-bg: #f0f9ff;
+    --info-border: #bae6fd;
+
+    --border-color: #e2e8f0;
+    --sidebar-width: 280px; /* Légèrement élargi pour respirer */
+    
+    /* Ombres douces de style design system moderne */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.04), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    display: flex;
+    min-height: 100vh;
+    line-height: 1.5;
+}
+
+/* --- STRUCTURE SIDEBAR (Look Premium) --- */
+.sidebar {
+    width: var(--sidebar-width);
+    background-color: var(--primary-color);
+    color: #ffffff;
+    padding: 2rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    z-index: 100;
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.brand-icon {
+    font-size: 1.6rem;
+    color: #38bdf8;
+    background: rgba(56, 189, 248, 0.1);
+    padding: 6px;
+    border-radius: 8px;
+}
+
+.brand h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: #f8fafc;
+}
+
+.nav-links {
+    list-style: none;
+    flex-grow: 1;
+}
+
+.nav-section {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #64748b;
+    margin: 1.75rem 0 0.5rem 0.75rem;
+    font-weight: 700;
+}
+
+.nav-links li a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #94a3b8;
+    text-decoration: none;
+    padding: 0.75rem 0.85rem;
+    border-radius: 8px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.nav-links li a i {
+    font-size: 1.1rem;
+    transition: color 0.2s;
+}
+
+.nav-links li a:hover {
+    background-color: rgba(255, 255, 255, 0.04);
+    color: #f1f5f9;
+}
+
+.nav-links li a.active {
+    background-color: var(--accent-color);
+    color: #ffffff;
+    font-weight: 600;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+}
+
+.nav-links li a.active i {
+    color: #ffffff;
+}
+
+.logout-link {
+    margin-top: auto;
+}
+
+.logout-link a:hover {
+    background-color: rgba(239, 68, 68, 0.1) !important;
+    color: #fca5a5 !important;
+}
+
+.user-profile-status {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0.85rem;
+    background-color: var(--primary-light);
+    border-radius: 12px;
+    margin-top: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.user-profile-status i {
+    font-size: 1.2rem;
+    color: #38bdf8;
+    background: rgba(56, 189, 248, 0.1);
+    padding: 8px;
+    border-radius: 8px;
+}
+
+.user-profile-status strong {
+    font-size: 0.85rem;
+    color: #f8fafc;
+}
+
+.role-badge {
+    background: rgba(56, 189, 248, 0.12);
+    color: #38bdf8;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    display: inline-block;
+    margin-top: 4px;
+}
+
+/* --- CONTENU PRINCIPAL --- */
+.main-content {
+    margin-left: var(--sidebar-width);
+    flex-grow: 1;
+    padding: 2.5rem;
+    background-color: var(--bg-color);
+}
+
+.main-header {
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.main-header h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+}
+
+/* --- GRILLES & CARDS (Effet Moderne Épuré) --- */
+.grid-container {
+    display: grid;
+    gap: 1.75rem;
+    margin-bottom: 1.75rem;
+}
+
+.card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 1.75rem;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.2s, transform 0.2s;
+}
+
+.card:hover {
+    box-shadow: var(--shadow-md);
+}
+
+.card h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--primary-color);
+}
+
+/* --- FORMULAIRES & INPUTS --- */
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: var(--primary-light);
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.65rem 0.85rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    background-color: #fff;
+    color: var(--text-main);
+    font-size: 0.9rem;
+    transition: all 0.15s ease-in-out;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 4px var(--accent-focus), inset 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+/* Style spécifique pour uniformiser les select */
+select.form-control {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2364748b'%3E%3Cpath d='M12 16L6 10H18L12 16Z'%3E%3C/path%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    background-size: 1.25rem;
+    padding-right: 2.5rem;
+}
+
+/* --- BOUTONS (Bords adoucis, feedback tactile) --- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.65rem 1.5rem;
+    font-weight: 500;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-primary {
+    background-color: var(--accent-color);
+    color: #ffffff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-hover);
+}
+
+.btn-primary:active {
+    transform: scale(0.98);
+}
+
+/* --- TABLEAUX DE DONNÉES (Design minimaliste de Dashboard) --- */
+.table-responsive {
+    overflow-x: auto;
+    border-radius: 8px;
+    border: 1px solid var(--border-color);
+}
+
+.table-custom {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.85rem;
+    background-color: #ffffff;
+}
+
+.table-custom th {
+    background-color: #f8fafc;
+    padding: 0.85rem 1rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    border-bottom: 1px solid var(--border-color);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+}
+
+.table-custom td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    vertical-align: middle;
+    color: #334155;
+}
+
+.table-custom tr:last-child td {
+    border-bottom: none;
+}
+
+.table-custom tr:hover td {
+    background-color: #f8fafc;
+}
+
+/* --- ALERTES NOTIFICATIONS (Look feutré d'application SaaS) --- */
+.flash-container {
+    margin-bottom: 1.75rem;
+}
+
+.alert {
+    padding: 0.85rem 1.25rem;
+    border-radius: 8px;
+    margin-bottom: 0.75rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.85rem;
+    box-shadow: var(--shadow-sm);
+}
+
+.alert-success { background-color: var(--success-bg); color: var(--success-color); border: 1px solid var(--success-border); }
+.alert-danger  { background-color: var(--danger-bg);  color: var(--danger-color);  border: 1px solid var(--danger-border); }
+.alert-warning { background-color: var(--warning-bg); color: var(--warning-color); border: 1px solid var(--warning-border); }
+.alert-info    { background-color: var(--info-bg);    color: var(--info-color);    border: 1px solid var(--info-border); }

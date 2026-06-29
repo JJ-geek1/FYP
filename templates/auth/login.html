@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Connexion - PrivacyShare{% endblock %}
+{% block page_title %}Authentification Requise{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: center; align-items: center; padding-top: 4rem;">
+    <div class="card" style="width: 100%; max-width: 450px; border-top: 5px solid var(--primary-color);">
+        <h3><i class="ri-lock-password-line"></i> Passerelle d'Accès</h3>
+        <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">
+            Entrez vos identifiants pour charger vos clés de session.
+        </p>
+
+        <form action="{{ url_for('auth.login') }}" method="POST">
+            <div class="form-group">
+                <label for="email">Adresse Email</label>
+                <input type="email" id="email" name="email" class="form-control" placeholder="nom@exemple.com" required>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Mot de passe</label>
+                <input type="password" id="password" name="password" class="form-control" placeholder="••••••••" required>
+            </div>
+
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem; background-color: var(--primary-color); gap: 8px;">
+                <i class="ri-login-box-line"></i> Ouvrir la Session
+            </button>
+        </form>
+
+        <div style="margin-top: 1.5rem; text-align: center; font-size: 0.9rem;">
+            <span style="color: var(--text-muted);">Nouveau sur la plateforme ?</span> 
+            <a href="{{ url_for('auth.register') }}" style="color: var(--accent-color); font-weight: bold; text-decoration: none;">Créer un compte</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
